@@ -34,7 +34,7 @@ def sieve(n):
             p.append(i+1)
     return p
 
-mass = sieve(14185)
+mass = sieve(15000)
 
 def P(n,k):
     '''P(n,k) = 1, если n может быть представлено
@@ -79,7 +79,7 @@ def S(n):
     r = 0
     for i in range(n + 1):
         for j in range(n + 1):
-            t = P2(i,j)[0]
+            t = P(i,j)[0]
             #print('P({},{}) = {}'.format(i, j, t))
             r += t
         if i % 100 == 0:
@@ -87,7 +87,7 @@ def S(n):
     return r
 
 def P2(n, k):
-    '''Возможно более быстрое. Использую "Проблема Гольдбаха".
+    '''P(n, k) более быстрое. Использую "Проблема Гольдбаха".
    При рекурсивном вызыве не правильно показывает разложение'''
     if n <= 0 or k <= 0:
         return (0, ())
@@ -115,5 +115,18 @@ def P2(n, k):
         else:
             return P2(n - 3, k - 1)
 
+def S2(n, start=0):
+    '''S(n) сумму значений функции P(i,k)
+для всех i и k, таких что 1≤i≤n, 1≤k≤n'''
+    r = 0
+    for i in range(start, n + 1):
+        for j in range(n + 1):
+            t = P2(i,j)[0]
+            #print('P({},{}) = {}'.format(i, j, t))
+            r += t
+        if i % 100 == 0:
+            print('S({}) = {}'.format(i, r))
+    return r
 
-print(S(14185))
+
+print(S2(14185))
